@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>SpringWebApp</title>
+    </head>
+    <body>
+        <h3 th:text="${person.getName() + ' ' + person.getSurname() + ', ' + person.getBirthdayYear()}"></h3>
+
+        <hr>
+
+        <div th:if="${not #lists.isEmpty(books)}">
+            <h3>Books: </h3>
+            <div th:each="book : ${books}">
+                <h4 th:style = "${book.isHoldingTimeExpired()} ? 'color: red' : 'color: black' "
+                    th:text="${book.getName() + ', ' + book.getAuthor() + ', ' + book.getPublicationYear()}">books</h4>
+            </div>
+        </div>
+
+        <h3 th:if="${#lists.isEmpty(books)}">No books yet</h3>
+
+        <hr>
+
+        <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
+            <input type="submit" value="Edit">
+        </form>
+
+        <br>
+
+        <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+            <input type="submit" value="Delete">
+        </form>
+    </body>
+</html>

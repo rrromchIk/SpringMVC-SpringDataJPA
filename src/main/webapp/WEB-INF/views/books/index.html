@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SpringWebApp</title>
+</head>
+<body>
+<div th:each="book : ${books}">
+    <a th:href="@{/books/{id}(id=${book.getId()})}"
+       th:text="${book.getName() + ' ' + book.getAuthor() + ', ' + book.getPublicationYear()}">books info</a>
+</div>
+<hr>
+<a href="/books/new">Add new</a>
+</body>
+</html>

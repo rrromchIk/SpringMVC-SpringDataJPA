@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>SpringWebApp</title>
+    </head>
+    <body>
+        <h3 th:text="${book.getName() + ' ' + book.getAuthor() + ', ' + book.getPublicationYear()}"></h3>
+
+        <hr>
+
+        <div th:if="${people}">
+            <form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getId()})}">
+                <h2>This book isn't taken. </h2>
+                <label for="person">Select person to assign: </label>
+                <select th:object="${person}" th:field="*{id}" id="person">
+                    <option th:each="person : ${people}" th:value="${person.getId()}"
+                            th:text="${person.getName() + ' ' + person.getSurname() + ', ' + person.getBirthdayYear()}"/>
+                </select>
+                <input type="submit" value="Assign">
+            </form>
+
+        </div>
+
+        <div th:if="${owner}">
+            <h2>This book is taken by:</h2>
+            <h2 th:text="${book.getOwner().getName() + ' ' + book.getOwner().getSurname() + ', ' + book.getOwner().getBirthdayYear()}">person info</h2>
+            <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getId()})}">
+                <input type="submit" value="Release">
+            </form>
+        </div>
+
+        <hr>
+
+        <form method="get" th:action="@{/books/{id}/edit(id=${book.getId()})}">
+            <input type="submit" value="Edit">
+        </form>
+        <br>
+        <form th:method="DELETE" th:action="@{/books/{id}(id=${book.getId()})}">
+            <input type="submit" value="Delete">
+        </form>
+    </body>
+</html>

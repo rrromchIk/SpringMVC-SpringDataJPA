@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>SpringWebApp</title>
+    </head>
+    <body>
+        <form method="post" action="/books/search">
+            <label for="title">Enter book's title you want to find</label>
+            <input name="title" id="title" required>
+            <input type="submit" value="Search!">
+        </form>
+
+        <hr>
+
+        <div th:if="${books.isEmpty()}">
+            <h3>Book is not found(</h3>
+        </div>
+
+        <div th:if="${!books.isEmpty()}">
+            <div th:each="book : ${books}">
+                <h3 th:text="${book.getName() + ' ' + book.getAuthor() + ', ' + book.getPublicationYear()}"></h3>
+
+                <div th:if="${book.getOwner() == null}">
+                    <h4>This book isn't taken. </h4>
+                </div>
+
+                <div th:if="${book.getOwner()}">
+                    <h4>This book is taken by:</h4>
+                    <h4 th:text="${book.getOwner().getName() + ' ' + book.getOwner().getSurname() + ', ' + book.getOwner().getBirthdayYear()}">person info</h4>
+                </div>
+
+                <hr/><br/>
+            </div>
+        </div>
+    </body>
+</html>
